@@ -7,7 +7,7 @@ Variáveis de ambiente (GitHub Secrets):
   ML_CLIENT_ID        - App ID do Mercado Livre (developers.mercadolivre.com.br)
   ML_CLIENT_SECRET    - Secret Key do app do Mercado Livre
 Opcionais:
-  PRECO_MAXIMO        - padrão 3500
+  PRECO_MAXIMO        - padrão 10000
   SEEN_FILE           - arquivo para não repetir alertas (padrão seen_ids.json)
 """
 
