@@ -2,21 +2,12 @@ name: Rastreador de Notebooks ML
 
 on:
   schedule:
-    # GitHub Actions usa UTC. Brasília = UTC-3 (sem horário de verão).
-    # 07:00–20:00 BRT  ->  10:00–23:00 UTC
-    - cron: "0 10-23 * * *"
-    # 21:00–23:00 BRT  ->  00:00–02:00 UTC
-    - cron: "0 0-2 * * *"
-  workflow_dispatch: # permite rodar manualmente pela aba Actions
-
-concurrency:
-  group: tracker
-  cancel-in-progress: false
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   rastrear:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
 
     steps:
       - name: Checkout
@@ -25,19 +16,10 @@ jobs:
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-          cache: pip
+          python-version: '3.11'
 
       - name: Instalar dependências
         run: pip install requests
-
-      # Restaura a lista de anúncios já alertados (evita spam a cada hora)
-      - name: Restaurar histórico de alertas
-        uses: actions/cache/restore@v4
-        with:
-          path: seen_ids.json
-          key: seen-ids-${{ github.run_id }}
-          restore-keys: seen-ids-
 
       - name: Executar robô
         env:
@@ -46,10 +28,3 @@ jobs:
           ML_CLIENT_ID: ${{ secrets.ML_CLIENT_ID }}
           ML_CLIENT_SECRET: ${{ secrets.ML_CLIENT_SECRET }}
         run: python main.py
-
-      - name: Salvar histórico de alertas
-        if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: seen_ids.json
-          key: seen-ids-${{ github.run_id }}
