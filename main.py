@@ -22,7 +22,7 @@ import requests
 ML_API = "https://api.mercadolibre.com"
 SITE_ID = "MLB"
 TERMOS_BUSCA = ["notebook 16gb ryzen 7", "notebook 16gb core i7"]
-PRECO_MAXIMO = float(os.getenv("PRECO_MAXIMO", "3500"))
+PRECO_MAXIMO = float(os.getenv("PRECO_MAXIMO", "10000"))
 SEEN_FILE = Path(os.getenv("SEEN_FILE", "seen_ids.json"))
 LIMITE_POR_BUSCA = 50
 TIMEOUT = 20
